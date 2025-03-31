@@ -1,0 +1,12 @@
+services:
+  - type: web
+    name: app
+    env: python
+    runtime:
+      python:
+        version: 3.13
+    build:
+      command: cd utils && python app.py
+    start:
+      command: python app.py
+    port: 8000
