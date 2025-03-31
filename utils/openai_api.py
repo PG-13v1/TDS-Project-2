@@ -61,6 +61,5 @@ def extract_parameters(prompt: str, function_definitions_llm):
         print(f"An unexpected error occurred: {e}")
         return None 
     
-extract_parameters("extract the email from query", function_definitions_objects_llm["extract_email"])
 
 
