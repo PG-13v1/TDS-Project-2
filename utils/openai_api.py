@@ -1,18 +1,21 @@
 import json
 import httpx
 import os
+from question_matching import find_similar_question
+from function_definations_llm import function_definitions_objects_llm
+from solution_functions import *
+from dotenv import load_dotenv
 
-from utils.function_definations_llm import function_definitions_objects_llm
+load_dotenv('TDS-project-2/utils/secrets.env')
 
 # OpenAI API settings
 openai_api_chat = "http://aiproxy.sanand.workers.dev/openai/v1/chat/completions"
-openai_api_key = os.getenv("AIPROXY_TOKEN")
+openai_api_key = str(os.environ['API_KEY'])
 
 headers = {
     "Authorization": f"Bearer {openai_api_key}",
     "Content-Type": "application/json",
 }
-
 
 def extract_parameters(prompt: str, function_definitions_llm):
     """Send a user query to OpenAI API and extract structured parameters."""
@@ -56,23 +59,8 @@ def extract_parameters(prompt: str, function_definitions_llm):
         return None
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
-        return None
+        return None 
+    
+extract_parameters("extract the email from query", function_definitions_objects_llm["extract_email"])
 
 
-# Example usage
-queries = [
-    "Send a HTTPS request to https://httpbin.org/get with the URL encoded parameter email set to 23f2005217@ds.study.iitm.ac.in",
-    # "Run npx -y prettier@3.4.2 README.md | sha256sum.",
-    # "Type this formula in Google Sheets: =SUM(ARRAY_CONSTRAIN(SEQUENCE(100, 100, 15, 12), 1, 10))",
-]
-
-function_defs = [
-    "make_http_requests_with_uv",
-    # "run_command_with_npx",
-    # "use_google_sheets",
-]
-
-# for i in range(len(queries)):
-# result = extract_parameters(queries[i], function_definitions_objects_llm[function_defs[i]])
-# print(function_definitions_objects_llm[function_defs[i]])
-# print(result)

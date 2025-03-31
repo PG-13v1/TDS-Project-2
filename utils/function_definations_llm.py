@@ -1,76 +1,119 @@
 function_definitions_objects_llm = {
     "vs_code_version": {
         "name": "vs_code_version",
-        "description": "description",
+        "description": "running code -s to get diagnostics of vs_code ",
         "parameters": {
             "type": "object",
             "properties": {
                 "text": {
                     "type": "string",
-                    "description": "The text to extract the data from"
+                    "description": "extract command  from to given query"
                 }
             },
-            "required": ["text"]
+            "required": ["code"]
         }
     },
 
     "make_http_requests_with_uv": {
         "name": "make_http_requests_with_uv",
-        "description": "extract the http url and query parameters from the given text for example 'uv run --with httpie -- https [URL] installs the Python package httpie and sends a HTTPS request to the URL. Send a HTTPS request to https://httpbin.org/get with the URL encoded parameter country set to India and city set to Chennai. What is the JSON output of the command? (Paste only the JSON body, not the headers)' in this example country: India and city: Chennai are the query parameters",
+        "description": "extract the http url and email from the given text for example 'uv run --with httpie -- https [URL] installs the Python package httpie and sends a HTTPS request to the URL. Send a HTTPS request to with the URL encoded parameter country set to India and city set to Chennai. What is the JSON output of the command? (Paste only the JSON body, not the headers)' in this example country: India and city: Chennai are the query parameters",
         "parameters": {
             "type": "object",
             "properties": {
-                "query_params": {
-                    "type": "object",
-                    "description": "The query parameters to send with the request URL encoded parameters"
-                },
+                "email": {
+                "type": "string",
+                "description": "email in text"
             },
-            "required": ["query_params","url"]
+            "url": {
+                "type": "string",
+                "description": "url in text"
+            },
+        },
+            "required": ["email","url"]
         }
     },
 
     "run_command_with_npx": {
         "name": "run_command_with_npx",
-        "description": "description",
+        "description": "Run npx and prettier on an md file",
         "parameters": {
             "type": "object",
             "properties": {
-                "text": {
+                "file_path": {
                     "type": "string",
-                    "description": "The text to extract the data from"
+                    "description": "The filename to verify using Prettier and SHA-256 checksum."
                 }
             },
-            "required": ["text"]
+            "required": ["file_path"]
         }
     },
 
     "use_google_sheets": {
         "name": "use_google_sheets",
-        "description": "description",
+        "description": "solve the google sheets formula",
         "parameters": {
             "type": "object",
             "properties": {
-                "text": {
-                    "type": "string",
-                    "description": "The text to extract the data from"
-                }
+                "rows": {
+                "type": "integer",
+                "description": "rows given in text"
             },
-            "required": ["text"]
+            "cols": {
+                "type": "integer",
+                "description": "columns given in text"
+            },
+            "start": {
+                "type": "integer",
+                "description": "starting point given in text"
+            },
+            "step": {
+                "type": "integer",
+                "description": "step given in text"
+            },
+            "extract_rows": {
+                "type": "integer",
+                "description": "extract rows given in text"
+            },
+            "extract_cols": {
+                "type": "integer",
+                "description": "extract columns given in text"
+            },
+        },
+            "required": ["rows","cols","start","step","extract_rows","extract_cols"]
         }
     },
-
+    
     "use_excel": {
         "name": "use_excel",
-        "description": "description",
+        "description": "solve the ms excel formula given ",
         "parameters": {
             "type": "object",
             "properties": {
-                "text": {
-                    "type": "string",
-                    "description": "The text to extract the data from"
-                }
+                "values": {
+                "type": "array",
+                "items": {
+                        "type": "number"
+                },
+                "description": "values given in the formula"
             },
-            "required": ["text"]
+            "sort_keys": {
+                "type": "array",
+                "items": {
+                        "type": "number"
+                    },
+                "description": "sorted keys in text"
+            },
+            "num_rows": {
+                "type": "integer",
+                "description": "number of rows"
+            },
+            "num_elements": {
+                "type": "integer",
+                "description": "number of elements"
+            },
+
+        },
+            "required": ["values","sort_keys","num_rows","num_elements"]
         }
     },
 
@@ -85,24 +128,32 @@ function_definitions_objects_llm = {
                     "description": "The text to extract the data from"
                 }
             },
-            "required": ["text"]
+            "required": ["file"]
         }
     },
 
     "count_wednesdays": {
-        "name": "count_wednesdays",
-        "description": "description",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "text": {
-                    "type": "string",
-                    "description": "The text to extract the data from"
-                }
+    "name": "count_wednesdays",
+    "description": "description",
+    "parameters": {
+        "type": "object",
+        "properties": {
+            "start_date": {
+                "type": "string",
+                "description": "Start date in YYYY-MM-DD format"
             },
-            "required": ["text"]
-        }
-    },
+            "end_date": {
+                "type": "string",
+                "description": "End date in YYYY-MM-DD format"
+            },
+            "weekday": {
+                "type": "integer",
+                "description": "Day of the week "
+            }
+        },
+        "required": ["start_date", "end_date", "weekday"]
+    }
+},
 
     "extract_csv_from_a_zip": {
         "name": "extract_csv_from_a_zip",
@@ -110,12 +161,13 @@ function_definitions_objects_llm = {
         "parameters": {
             "type": "object",
             "properties": {
-                "text": {
+                "column": {
                     "type": "string",
-                    "description": "The text to extract the data from"
+                    "description": "name of the column which you have to find the value of"
                 }
+                
             },
-            "required": ["text"]
+            "required": ["column"]
         }
     },
 
@@ -125,12 +177,13 @@ function_definitions_objects_llm = {
         "parameters": {
             "type": "object",
             "properties": {
-                "text": {
+                "input_file": {
                     "type": "string",
                     "description": "The text to extract the data from"
-                }
+                },
+
             },
-            "required": ["text"]
+            "required": ["input_data"]
         }
     },
 
@@ -140,42 +193,47 @@ function_definitions_objects_llm = {
         "parameters": {
             "type": "object",
             "properties": {
-                "text": {
+                "file": {
                     "type": "string",
                     "description": "The text to extract the data from"
                 }
             },
-            "required": ["text"]
+            "required": []
         }
     },
 
     "css_selectors": {
         "name": "css_selectors",
-        "description": "description",
+        "description": "select particular attributes with particular classes",
         "parameters": {
             "type": "object",
             "properties": {
                 "text": {
                     "type": "string",
-                    "description": "The text to extract the data from"
+                    "description": "The html to extract the data from"
                 }
             },
-            "required": ["text"]
+            "required": ["html_file"]
         }
     },
-
     "process_files_with_different_encodings": {
         "name": "process_files_with_different_encodings",
-        "description": "description",
+        "description": "",
         "parameters": {
             "type": "object",
             "properties": {
-                "text": {
-                    "type": "string",
-                    "description": "The text to extract the data from"
-                }
+                "encoding": {
+                    "type": "array",
+                    "description": "encoding like cp-1252 or utf-8"
+                },
+                "symbol": {
+                    "type": "array",
+                    "description": "symbols of what to calculate for"
+                },
+
+
             },
-            "required": ["text"]
+            "required": ["input_data", "from_file"]
         }
     },
 
@@ -185,12 +243,24 @@ function_definitions_objects_llm = {
         "parameters": {
             "type": "object",
             "properties": {
-                "text": {
+                "github_username": {
                     "type": "string",
-                    "description": "The text to extract the data from"
+                    "description": "github_username"
+                },
+                "github_token": {
+                    "type": "string",
+                    "description": "github_token"
+                },
+                "repo_name": {
+                    "type": "string",
+                    "description": "repo_name"
+                },
+                "email": {
+                    "type": "string",
+                    "description": "email"
                 }
             },
-            "required": ["text"]
+            "required": ["github_username", "github_token", "repo_name", "email"]
         }
     },
 
@@ -200,12 +270,16 @@ function_definitions_objects_llm = {
         "parameters": {
             "type": "object",
             "properties": {
-                "text": {
+                "replaced_text": {
                     "type": "string",
-                    "description": "The text to extract the data from"
+                    "description": "extract the name of the tthe string which will replace the text"
+                },
+                "replacing_text": {
+                    "type": "string",
+                    "description": "extract the name of the the string which is gonna replace the repaced text"
                 }
             },
-            "required": ["text"]
+            "required": []
         }
     },
 
@@ -215,12 +289,12 @@ function_definitions_objects_llm = {
         "parameters": {
             "type": "object",
             "properties": {
-                "text": {
-                    "type": "string",
-                    "description": "The text to extract the data from"
+                "size": {
+                    "type": "integer",
+                    "description": "size of the threhold for which the file size should be greater"
                 }
             },
-            "required": ["text"]
+            "required": []
         }
     },
 
@@ -230,12 +304,12 @@ function_definitions_objects_llm = {
         "parameters": {
             "type": "object",
             "properties": {
-                "text": {
+                "input_file": {
                     "type": "string",
                     "description": "The text to extract the data from"
                 }
             },
-            "required": ["text"]
+            "required": []
         }
     },
 
@@ -245,12 +319,12 @@ function_definitions_objects_llm = {
         "parameters": {
             "type": "object",
             "properties": {
-                "text": {
+                "input_file": {
                     "type": "string",
                     "description": "The text to extract the data from"
                 }
             },
-            "required": ["text"]
+            "required": []
         }
     },
 
@@ -265,7 +339,7 @@ function_definitions_objects_llm = {
                     "description": "The text to extract the data from"
                 }
             },
-            "required": ["text"]
+            "required": []
         }
     },
 
@@ -275,12 +349,12 @@ function_definitions_objects_llm = {
         "parameters": {
             "type": "object",
             "properties": {
-                "text": {
+                "headings": {
                     "type": "string",
-                    "description": "The text to extract the data from"
+                    "description": "The headings"
                 }
             },
-            "required": ["text"]
+            "required": ["heading"]
         }
     },
 
@@ -290,12 +364,12 @@ function_definitions_objects_llm = {
         "parameters": {
             "type": "object",
             "properties": {
-                "text": {
-                    "type": "string",
-                    "description": "The text to extract the data from"
-                }
+                "threshold": {
+                    "type": "integer",
+                    "description": "The upper limit value up to which the image is to be compressed,the compressed value should be less than the threshold value"
+                },
             },
-            "required": ["text"]
+            "required": ["threshold"]
         }
     },
 
@@ -305,9 +379,21 @@ function_definitions_objects_llm = {
         "parameters": {
             "type": "object",
             "properties": {
-                "text": {
+                "github_token": {
                     "type": "string",
                     "description": "The text to extract the data from"
+                },
+                "github_username": {
+                    "type": "string",
+                    "description": "The text to extract the data from"
+                },
+                "github_username": {
+                    "type": "string",
+                    "description": "The text to extract the data from"
+                },
+                "email": {
+                    "type": "string",
+                    "description": "extract the email from query"
                 }
             },
             "required": ["text"]
@@ -320,12 +406,12 @@ function_definitions_objects_llm = {
         "parameters": {
             "type": "object",
             "properties": {
-                "text": {
+                "email": {
                     "type": "string",
-                    "description": "The text to extract the data from"
+                    "description": "extract email from the text"
                 }
             },
-            "required": ["text"]
+            "required": ["email"]
         }
     },
 
@@ -335,12 +421,16 @@ function_definitions_objects_llm = {
         "parameters": {
             "type": "object",
             "properties": {
-                "text": {
+                "email": {
                     "type": "string",
                     "description": "The text to extract the data from"
+                },
+                "year": {
+                    "type": "string",
+                    "description": "extract year from the text"
                 }
             },
-            "required": ["text"]
+            "required": ["email", "year"]
         }
     },
 
@@ -365,9 +455,21 @@ function_definitions_objects_llm = {
         "parameters": {
             "type": "object",
             "properties": {
-                "text": {
+                "github_token": {
                     "type": "string",
                     "description": "The text to extract the data from"
+                },
+                "github_username": {
+                    "type": "string",
+                    "description": "The text to extract the data from"
+                },
+                "github_username": {
+                    "type": "string",
+                    "description": "The text to extract the data from"
+                },
+                "email": {
+                    "type": "string",
+                    "description": "extract the email from query"
                 }
             },
             "required": ["text"]
@@ -380,9 +482,17 @@ function_definitions_objects_llm = {
         "parameters": {
             "type": "object",
             "properties": {
-                "text": {
+                "username": {
                     "type": "string",
-                    "description": "The text to extract the data from"
+                    "description": "username of user"
+                },
+                "repository": {
+                    "type": "string",
+                    "description": "repository name in docker"
+                },
+                "tag": {
+                    "type": "string",
+                    "description": "tag to be pushed in the image"
                 }
             },
             "required": ["text"]
@@ -395,10 +505,10 @@ function_definitions_objects_llm = {
         "parameters": {
             "type": "object",
             "properties": {
-                "text": {
+                "username": {
                     "type": "string",
-                    "description": "The text to extract the data from"
-                }
+                    "description": "username of user"
+                },
             },
             "required": ["text"]
         }
@@ -425,12 +535,12 @@ function_definitions_objects_llm = {
         "parameters": {
             "type": "object",
             "properties": {
-                "text": {
+                "sentiment_text": {
                     "type": "string",
-                    "description": "The text to extract the data from"
+                    "description": "extract the text for which the sentiment is to be predicted if its bad good or neutral."
                 }
             },
-            "required": ["text"]
+            "required": ["sentiment_text"]
         }
     },
 
@@ -440,12 +550,16 @@ function_definitions_objects_llm = {
         "parameters": {
             "type": "object",
             "properties": {
-                "text": {
+                "query": {
                     "type": "string",
-                    "description": "The text to extract the data from"
+                    "description": "send the text to get the token cost"
+                },
+                 "api_key":{
+                    "query": "string",
+                    "description": "api_key"
                 }
             },
-            "required": ["text"]
+            "required": ["query","api_key"]
         }
     },
 
@@ -455,12 +569,16 @@ function_definitions_objects_llm = {
         "parameters": {
             "type": "object",
             "properties": {
-                "text": {
+                "system_message": {
                     "type": "string",
-                    "description": "The text to extract the data from"
+                    "description": "messaGe going to be provided to the system or system prompt"
+                },
+                 "user_message":{
+                    "query": "string",
+                    "description": "message provided by the user or user prompt"
                 }
             },
-            "required": ["text"]
+            "required": ["system_message","user_message"]
         }
     },
 
@@ -470,12 +588,12 @@ function_definitions_objects_llm = {
         "parameters": {
             "type": "object",
             "properties": {
-                "text": {
-                    "type": "string",
-                    "description": "The text to extract the data from"
+                "user_message":{
+                    "query": "string",
+                    "description": "message provided by the user or user prompt"
                 }
             },
-            "required": ["text"]
+            "required": ["user_message"]
         }
     },
 
@@ -485,12 +603,19 @@ function_definitions_objects_llm = {
         "parameters": {
             "type": "object",
             "properties": {
-                "text": {
+                "transaction_code": {
+                    "type": "array",
+                    "items": {
+                        "type": "integer"
+                    },
+                    "description": "the  transaction codes provided in query multiple transaction codes would be present"
+                },
+                "email": {
                     "type": "string",
-                    "description": "The text to extract the data from"
+                    "description": "extract the email from query"
                 }
             },
-            "required": ["text"]
+            "required": ["transaction_code","email"]
         }
     },
 
@@ -545,12 +670,8 @@ function_definitions_objects_llm = {
         "parameters": {
             "type": "object",
             "properties": {
-                "text": {
-                    "type": "string",
-                    "description": "The text to extract the data from"
-                }
             },
-            "required": ["text"]
+            "required": []
         }
     },
 
@@ -560,12 +681,12 @@ function_definitions_objects_llm = {
         "parameters": {
             "type": "object",
             "properties": {
-                "text": {
+                "page_no": {
                     "type": "string",
-                    "description": "The text to extract the data from"
+                    "description": "the webpage to scrape from multiple pages"
                 }
             },
-            "required": ["text"]
+            "required": ["page_no"]
         }
     },
 
@@ -575,12 +696,16 @@ function_definitions_objects_llm = {
         "parameters": {
             "type": "object",
             "properties": {
-                "text": {
+                "lower_bound": {
                     "type": "string",
-                    "description": "The text to extract the data from"
-                }
+                    "description": "the lower bound of the user rating to ,ehich is minimum rating above which scraping is done"
+                },
+                "upper_bound": {
+                    "type": "string",
+                    "description": "the upper bound of the user rating to ,which is maximum rating above which scraping is done"
+                },
             },
-            "required": ["text"]
+            "required": ["page_no"]
         }
     },
 
@@ -605,39 +730,50 @@ function_definitions_objects_llm = {
         "parameters": {
             "type": "object",
             "properties": {
-                "text": {
+                "city": {
                     "type": "string",
-                    "description": "The text to extract the data from"
+                    "description": "The city for which weather is to be determined"
                 }
             },
-            "required": ["text"]
+            "required": ["city"]
         }
     },
 
     "find_the_bounding_box_of_a_city": {
-        "name": "find_the_bounding_box_of_a_city",
-        "description": "description",
-        "parameters": {
-            "type": "object",
-            "properties": {
-                "text": {
-                    "type": "string",
-                    "description": "The text to extract the data from"
-                }
+    "name": "find_the_bounding_box_of_a_city",
+    "description": "Find the bounding box coordinates for a specified city",
+    "parameters": {
+        "type": "object",
+        "properties": {
+            "city": {
+                "type": "string",
+                "description": "name of the city mentioned in the text"
             },
-            "required": ["text"]
-        }
-    },
-
+            "country": {
+                "type": "string",
+                "description": "name of the country mentioned in the text"
+            },
+            "osm_id": {
+                "type": "string",
+                "description": "osm_id of the city mentioned in the text else keep it None"
+            }
+        },
+        "required": ["city", "country"]  # Only city and country are required, osm_id is optional
+    }
+},
     "search_hacker_news": {
         "name": "search_hacker_news",
         "description": "description",
         "parameters": {
             "type": "object",
             "properties": {
-                "text": {
+                "query": {
                     "type": "string",
-                    "description": "The text to extract the data from"
+                    "description": "The topic to search for"
+                },
+                "points": {
+                    "type": "string",
+                    "description": "The topic to search for"
                 }
             },
             "required": ["text"]
@@ -680,12 +816,25 @@ function_definitions_objects_llm = {
         "parameters": {
             "type": "object",
             "properties": {
-                "text": {
+                "subject_filter": {
+                    "type": "string",
+                    "description": "the name of the subject which will be used as a filtering subject for marks."
+                },
+                "Group_lower_bound": {
                     "type": "string",
                     "description": "The text to extract the data from"
+                },
+                "Group_upper_bound": {
+                    "type": "string",
+                    "description": "The text to extract the data from"
+                },
+                "target_subject": {
+                    "type": "string",
+                    "description": "he name of the subject for which the marks have to be calculated"
                 }
+                
             },
-            "required": ["text"]
+            "required": ['subject_filter','Group_lower_bound','Group_upper_bound','target_subject']
         }
     },
 
@@ -695,12 +844,8 @@ function_definitions_objects_llm = {
         "parameters": {
             "type": "object",
             "properties": {
-                "text": {
-                    "type": "string",
-                    "description": "The text to extract the data from"
-                }
             },
-            "required": ["text"]
+            "required": []
         }
     },
 
@@ -710,12 +855,20 @@ function_definitions_objects_llm = {
         "parameters": {
             "type": "object",
             "properties": {
-                "text": {
+                "target_date": {
+                    "type": "Sales that occurred up to and including a specified date",
+                    "description": "The text to extract the data from"
+                },
+                "product": {
+                    "type": "string",
+                    "description": "The text to extract the data from"
+                },
+                "country": {
                     "type": "string",
                     "description": "The text to extract the data from"
                 }
             },
-            "required": ["text"]
+            "required": ["target_date", "product", "country"]
         }
     },
 
@@ -792,7 +945,7 @@ function_definitions_objects_llm = {
             "properties": {
                 "text": {
                     "type": "string",
-                    "description": "The text to extract the data from"
+                    "description": ""
                 }
             },
             "required": ["text"]
@@ -820,12 +973,12 @@ function_definitions_objects_llm = {
         "parameters": {
             "type": "object",
             "properties": {
-                "text": {
+                "timestamp": {
                     "type": "string",
-                    "description": "The text to extract the data from"
+                    "description": "find the timestamp from the query"
                 }
             },
-            "required": ["text"]
+            "required": ["timestamp"]
         }
     },
 
@@ -850,12 +1003,16 @@ function_definitions_objects_llm = {
         "parameters": {
             "type": "object",
             "properties": {
-                "text": {
+                "start_sec": {
+                    "type": "integer",
+                    "description": "start seconds of the video"
+                },
+                "end_sec": {
                     "type": "string",
-                    "description": "The text to extract the data from"
-                }
+                    "description": "ending seconds of the video"
+                },
             },
-            "required": ["text"]
+            "required": ["start_sec", "end_sec"]
         }
     },
 
@@ -865,9 +1022,9 @@ function_definitions_objects_llm = {
         "parameters": {
             "type": "object",
             "properties": {
-                "text": {
+                "mapping": {
                     "type": "string",
-                    "description": "The text to extract the data from"
+                    "description": "mapping according to which image will be reconstructed"
                 }
             },
             "required": ["text"]
