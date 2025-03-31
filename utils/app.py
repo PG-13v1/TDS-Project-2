@@ -22,7 +22,7 @@ app = Flask(__name__)
 SECRET_PASSWORD = os.getenv("SECRET_PASSWORD")
 
 
-@app.route("/api", methods=["POST"])
+@app.route("/", methods=["POST"])
 def process_file():
     question = request.form.get("question")
     file = request.files.get("file")  # Get the uploaded file (optional)
