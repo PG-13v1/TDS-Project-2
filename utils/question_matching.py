@@ -4,7 +4,7 @@ from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 
 def find_similar_question(input_question):
-    with open("TDS-project-2/data/questions.json", "r") as f:
+    with open("questions.json", "r") as f:
         questions_json = json.load(f)
 
     question_keys = list(questions_json.keys())
